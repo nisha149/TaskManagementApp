@@ -1,0 +1,16 @@
+# Ignore build and cache folders
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.log
+
+# Ignore node_modules
+node_modules/
+dist/
+.env
+
+# Ignore system files
+.DS_Store
+Thumbs.db
