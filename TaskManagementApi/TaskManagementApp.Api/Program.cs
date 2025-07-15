@@ -121,5 +121,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+// ——— Added: friendly root endpoint ———
+app.MapGet("/", () => Results.Ok(" TaskManagementApp API is running. Use /api/tasks for your API calls."));
+
+// — Optionally, later you can serve frontend static files:
+// app.UseStaticFiles();
+// app.MapFallbackToFile("index.html");
+
 app.Run();
+
 
