@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import Sidebar from '../components/Sidebar';
 import TaskList from '../components/TaskList';
 import AddTaskForm from '../components/AddTaskForm';
