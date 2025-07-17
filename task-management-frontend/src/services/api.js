@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const api = axios.create({
-  baseURL: 'https://localhost:7133/api',
+  baseURL: 'https://task-api-kc7b.onrender.com/',
   headers: {
     'Content-Type': 'application/json',
   },
