@@ -84,7 +84,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
     {
-        policy.WithOrigins("http://localhost:5173", "https://smart-manager.netlify.app")
+        policy.WithOrigins("http://localhost:5174", "https://smart-manager.netlify.app")
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
