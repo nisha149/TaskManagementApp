@@ -2,11 +2,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const api = axios.create({
-  baseURL: 'https://localhost:7133/api',
+  baseURL: 'https://task-api-kc7b.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
