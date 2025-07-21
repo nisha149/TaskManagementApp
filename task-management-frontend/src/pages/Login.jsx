@@ -57,7 +57,7 @@ function Login({ setIsAuthenticated }) {
               required
             />
           </div>
-          <button type="submit" className="w-full bg-primary text-white p-2 rounded hover:bg-blue-700">
+          <button type="submit" className="w-full bg-primary text-black p-2 rounded hover:bg-blue-700">
             Login
           </button>
         </form>
