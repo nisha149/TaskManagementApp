@@ -32,9 +32,7 @@ function TaskDashboard() {
 
   const sortAndSetTasks = (taskList) => {
     if (!taskList || taskList.length === 0) return;
-
     let sortedTasks = [...taskList];
-
     switch (sortOption) {
       case 'dueDate':
         sortedTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
@@ -52,13 +50,11 @@ function TaskDashboard() {
         sortedTasks.sort((a, b) => a.order - b.order);
         break;
     }
-
     setTasks(sortedTasks);
   };
 
   const handleDragEnd = async (result) => {
     if (!result.destination) return;
-
     const reordered = [...tasks];
     const [movedItem] = reordered.splice(result.source.index, 1);
     reordered.splice(result.destination.index, 0, movedItem);
@@ -74,7 +70,15 @@ function TaskDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-secondary flex">
+    <div
+      className="min-h-screen flex"
+      style={{
+        backgroundImage: "url('/path/to/your-background.jpg')", // <-- set your background image path here
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       <Sidebar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
@@ -89,25 +93,23 @@ function TaskDashboard() {
           ☰
         </button>
 
-  <DragDropContext onDragEnd={handleDragEnd}>
-  <Droppable
-    droppableId="tasks"
-    isDropDisabled={false}
-    isCombineEnabled={false}
-    ignoreContainerClipping={false} 
-  >
-    {(provided) => (
-      <div {...provided.droppableProps} ref={provided.innerRef}>
-        <TaskList tasks={tasks} setTasks={setTasks} />
-        {provided.placeholder}
-      </div>
-    )}
-  </Droppable>
-</DragDropContext>
-
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="tasks">
+            {(provided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                <TaskList tasks={tasks} setTasks={setTasks} />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
 
         <button
-          className="fixed bottom-4 right-4 bg-accent text-white p-4 rounded-full shadow-lg"
+          className="fixed bottom-5 right-6 p-6 rounded-full shadow-lg"
+          style={{
+            backgroundColor: '#52489f',
+            color: '#000000',
+          }}
           onClick={() => setIsAddTaskOpen(true)}
         >
           +

@@ -117,6 +117,8 @@ app.Logger.LogInformation("Running in environment: {env}", app.Environment.Envir
 // 9. HTTP request pipeline
 app.UseHttpsRedirection();
 app.UseCors("AllowReactApp");
+app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
