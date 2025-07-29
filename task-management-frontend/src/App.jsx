@@ -1,9 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import TaskDashboard from './pages/TaskDashboard';
-import { useState } from 'react';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
@@ -22,4 +22,3 @@ function App() {
 }
 
 export default App;
-

@@ -32,32 +32,41 @@ function Login({ setIsAuthenticated }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-primary mb-6">Login</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-text mb-2">Username</label>
+    <div className="min-h-screen flex items-center justify-center bg-secondary px-4">
+      <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-md animate-fade-in-down">
+        <h2 className="text-3xl font-extrabold text-primary mb-6 text-center">Welcome Back</h2>
+
+        {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Username</label>
             <input
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              placeholder="Enter your username"
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-text mb-2">Password</label>
+
+          <div>
+            <label className="block text-gray-700 font-medium mb-1">Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 border rounded"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              placeholder="Enter your password"
               required
             />
           </div>
-          <button type="submit" className="w-full bg-primary text-black p-2 rounded hover:bg-blue-700">
+
+          <button
+            type="submit"
+            className="w-full bg-primary text-black font-semibold py-3 rounded-lg hover:bg-[#b25598] transition duration-300"
+          >
             Login
           </button>
         </form>
@@ -67,4 +76,3 @@ function Login({ setIsAuthenticated }) {
 }
 
 export default Login;
-
