@@ -1,9 +1,7 @@
-// File: Program.cs
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using System.Text;
 using TaskManagementApp.Api.Data;
 using TaskManagementApp.Api.Services;
@@ -12,6 +10,13 @@ using TaskManagementApp.Api.Services;
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Force Kestrel to bind to Render's PORT
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(Int32.Parse(port));
+});
 
 // 1. Core services
 builder.Services.AddControllers();
@@ -109,19 +114,21 @@ else
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate(); // ensure migrations are applied before seeding
+    dbContext.Database.Migrate();
     DbInitializer.Seed(dbContext);
 }
 
 app.Logger.LogInformation("Running in environment: {env}", app.Environment.EnvironmentName);
 
 // 9. HTTP request pipeline
-app.UseHttpsRedirection();
+// Disable HTTPS redirection on Render
+// app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
-//  CORS must come here, after UseRouting and before auth
+// CORS must come here, after UseRouting and before auth
 app.UseCors("AllowReactApp");
 
 app.UseAuthentication();
@@ -129,7 +136,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Added: friendly root endpoint ———
-app.MapGet("/", () => Results.Ok("TaskManagementApp API is running. Use /api/tasks for your API calls."));
+// Friendly root endpoint
+app.MapGet("/", () => Results.Ok("? TaskManagementApp API is running on Render. Use /swagger for docs."));
 
 app.Run();
+
