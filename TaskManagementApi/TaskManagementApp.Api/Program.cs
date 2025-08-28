@@ -42,7 +42,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// 3. Configure PostgreSQL DbContext with retry logic
+// 3. Configure PostgreSQL DbContext with retry logic (Neon connection)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -109,6 +109,7 @@ else
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.Database.Migrate(); // ensure migrations are applied before seeding
     DbInitializer.Seed(dbContext);
 }
 
@@ -116,20 +117,19 @@ app.Logger.LogInformation("Running in environment: {env}", app.Environment.Envir
 
 // 9. HTTP request pipeline
 app.UseHttpsRedirection();
-app.UseCors("AllowReactApp");
 app.UseStaticFiles();
+
 app.UseRouting();
+
+//  CORS must come here, after UseRouting and before auth
+app.UseCors("AllowReactApp");
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
-// ——— Added: friendly root endpoint ———
-app.MapGet("/", () => Results.Ok(" TaskManagementApp API is running. Use /api/tasks for your API calls."));
-
-// — Optionally, later you can serve frontend static files:
-// app.UseStaticFiles();
-// app.MapFallbackToFile("index.html");
+// Added: friendly root endpoint ———
+app.MapGet("/", () => Results.Ok("TaskManagementApp API is running. Use /api/tasks for your API calls."));
 
 app.Run();
-
-
